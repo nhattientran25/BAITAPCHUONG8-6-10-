@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>BAI 29</title>
+        <script>
+            function getValue() {
+                var ho = document.getElementById("fname").value;
+                var ten = document.getElementById("lname").value;
+ 
+                document.getElementById("ketqua").innerHTML =
+                    "Ho: " + ho + "<br>Ten: " + ten;
+            }
+        </script>
+    </head>
+
+    <body>
+        <form id="form1" onsubmit="getValue(); return false;">
+            First name:
+            <input type="text" id="fname" name="fname" value="Tran">
+            <br>
+
+            Last name:
+            <input type="text" id="lname" name="lname" value="Nhat Tien">
+            <br>
+
+            <input type="submit" value="Submit">
+            <br>
+
+            <p id="ketqua"></p>
+        </form>
+    </body>
+</html>
