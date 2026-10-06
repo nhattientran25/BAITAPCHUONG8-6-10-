@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAI 8 - Máy tính</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            margin: 30px;
+            font-family: Arial, sans-serif;
+        }
+
+        input {
+            width: 70px;
+        }
+
+        button {
+            min-width: 34px;
+        }
+    </style>
+</head>
+<body>
+    <input type="number" id="number1" step="any" value="12" aria-label="Số thứ nhất">
+    <button type="button" data-operation="add" aria-label="Cộng">+</button>
+    <button type="button" data-operation="subtract" aria-label="Trừ">-</button>
+    <button type="button" data-operation="multiply" aria-label="Nhân">&times;</button>
+    <button type="button" data-operation="divide" aria-label="Chia">/</button>
+    <button type="button" data-operation="power" aria-label="Lũy thừa">^</button>
+    <input type="number" id="number2" step="any" value="14" aria-label="Số thứ hai">
+    =
+    <input type="text" id="result" readonly aria-label="Kết quả">
+    <p id="error" role="alert" style="color: red;"></p>
+
+    <script>
+        $(function () {
+            $("button[data-operation]").on("click", function () {
+                var first = Number($("#number1").val());
+                var second = Number($("#number2").val());
+                var operation = $(this).data("operation");
+                var result;
+
+                $("#error").text("");
+                if ($("#number1").val() === "" || $("#number2").val() === "") {
+                    $("#result").val("");
+                    $("#error").text("Vui lòng nhập cả hai số.");
+                    return;
+                }
+
+                switch (operation) {
+                    case "add":
+                        result = first + second;
+                        break;
+                    case "subtract":
+                        result = first - second;
+                        break;
+                    case "multiply":
+                        result = first * second;
+                        break;
+                    case "divide":
+                        if (second === 0) {
+                            $("#result").val("");
+                            $("#error").text("Không thể chia cho 0.");
+                            return;
+                        }
+                        result = first / second;
+                        break;
+                    case "power":
+                        result = Math.pow(first, second);
+                        break;
+                }
+
+                if (!Number.isFinite(result)) {
+                    $("#result").val("");
+                    $("#error").text("Kết quả không hợp lệ.");
+                    return;
+                }
+
+                $("#result").val(result);
+            });
+        });
+    </script>
+</body>
+</html>

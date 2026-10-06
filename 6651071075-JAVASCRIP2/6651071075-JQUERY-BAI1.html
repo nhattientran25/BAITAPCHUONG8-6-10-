@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CAU 1</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <p id="text">Chao mung den voi Jquery.</p>
+  <button id="jsstyle">Submit</button>
+
+  <script>
+    $(document).ready(function () {
+      $("#jsstyle").click(function () {
+        $("#text").css({
+          "font-size": "24px",
+          "font-family": "Arial, sans-serif",
+          "color": "red"
+        });
+      });
+    });
+  </script>
+</body>
+</html>

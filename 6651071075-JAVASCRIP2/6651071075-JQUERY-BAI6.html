@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>CAU 6</title>
+    <style>
+        body {
+            margin: 30px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <form>
+        <label for="mySelect">Select your favorite color:</label>
+        <select id="mySelect">
+            <option>Red</option>
+            <option>Green</option>
+            <option>Blue</option>
+            <option>White</option>
+            <option>Pink</option>
+        </select>
+        <input type="button" id="countOptions" value="Count and Output all items">
+    </form>
+
+    <script>
+        $(function () {
+            $("#countOptions").on("click", function () {
+                var $options = $("#mySelect option");
+                var items = $options.map(function () {
+                    return $(this).text();
+                }).get();
+
+                alert("Number of items: " + $options.length + "\nItems: " + items.join(", "));
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>CAU 2</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <form id="form1">
+        First name:
+        <input type="text" id="fname" name="fname" value="Tran">
+        <br>
+
+        Last name:
+        <input type="text" id="lname" name="lname" value="Nhat Tien">
+        <br>
+
+        <input type="submit" value="Submit">
+        <br>
+
+        <p id="ketqua" style="white-space: pre-line;"></p>
+    </form>
+
+    <script>
+        $(function () {
+            $("#form1").on("submit", function (event) {
+                event.preventDefault();
+
+                var ho = $("#fname").val();
+                var ten = $("#lname").val();
+
+                $("#ketqua").text("Ho: " + ho + "\nTen: " + ten);
+            });
+        });
+    </script>
+</body>
+</html>

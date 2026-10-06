@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>CAU 4</title>
+    <style>
+        body {
+            margin: 30px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <form>
+        <select id="colorSelect">
+            <option>Red</option>
+            <option>Green</option>
+            <option>White</option>
+            <option>Black</option>
+        </select>
+
+        <input type="button" id="removeColor" value="Select and Remove">
+    </form>
+
+    <script>
+        $(function () {
+            $("#removeColor").on("click", function () {
+                $("#colorSelect option:selected").remove();
+            });
+        });
+    </script>
+</body>
+</html>

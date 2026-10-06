@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAI 9 - Form đăng ký</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            margin: 30px;
+            font-family: Arial, sans-serif;
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: inline-block;
+            width: 120px;
+        }
+
+        .required {
+            color: red;
+        }
+
+        #errors {
+            color: red;
+        }
+
+        #success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Form đăng ký</h1>
+
+    <form id="registrationForm" novalidate>
+        <div class="field">
+            <label for="fullName">Họ và tên <span class="required">*</span></label>
+            <input type="text" id="fullName" name="fullName">
+        </div>
+        <div class="field">
+            <label for="email">Email <span class="required">*</span></label>
+            <input type="text" id="email" name="email" inputmode="email">
+        </div>
+        <div class="field">
+            <label for="birthDate">Ngày sinh <span class="required">*</span></label>
+            <input type="text" id="birthDate" name="birthDate" placeholder="mm/dd/yyyy hoặc mm-dd-yyyy">
+        </div>
+        <div class="field">
+            <label for="zipCode">Zip code <span class="required">*</span></label>
+            <input type="text" id="zipCode" name="zipCode" inputmode="numeric" maxlength="5">
+        </div>
+
+        <button type="button" id="clearButton">Clear</button>
+        <button type="submit">Finish</button>
+    </form>
+
+    <div id="errors" role="alert" aria-live="polite"></div>
+    <p id="success" role="status" aria-live="polite"></p>
+
+    <script>
+        $(function () {
+            $("#registrationForm").on("submit", function (event) {
+                event.preventDefault();
+
+                var errors = [];
+                var fullName = $("#fullName").val().trim();
+                var email = $("#email").val().trim();
+                var birthDate = $("#birthDate").val().trim();
+                var zipCode = $("#zipCode").val().trim();
+
+                if (!fullName) {
+                    errors.push("Vui lòng nhập họ và tên.");
+                }
+
+                if (!email) {
+                    errors.push("Vui lòng nhập email.");
+                } else if (!/^[^@\s.]+(?:\.[^@\s.]+)?@[^@\s]+(?:\.[^@\s]+)+$/.test(email)) {
+                    errors.push("Email không hợp lệ. Phần trước @ được có tối đa một dấu chấm; phần sau @ phải có ít nhất một dấu chấm.");
+                }
+
+                if (!birthDate) {
+                    errors.push("Vui lòng nhập ngày sinh.");
+                } else {
+                    var dateMatch = birthDate.match(/^(\d{1,2})([/-])(\d{1,2})\2(\d{4})$/);
+                    if (!dateMatch) {
+                        errors.push("Ngày sinh phải theo định dạng mm/dd/yyyy hoặc mm-dd-yyyy.");
+                    } else {
+                        var month = Number(dateMatch[1]);
+                        var day = Number(dateMatch[3]);
+                        var year = Number(dateMatch[4]);
+                        var date = new Date(year, month - 1, day);
+                        var validCalendarDate = date.getFullYear() === year &&
+                            date.getMonth() === month - 1 &&
+                            date.getDate() === day;
+
+                        if (month < 1 || month > 12 || !validCalendarDate) {
+                            errors.push("Ngày sinh không tồn tại.");
+                        } else if (year >= new Date().getFullYear()) {
+                            errors.push("Năm sinh phải nhỏ hơn năm hiện tại.");
+                        }
+                    }
+                }
+
+                if (!zipCode) {
+                    errors.push("Vui lòng nhập Zip code.");
+                } else if (!/^\d{5}$/.test(zipCode)) {
+                    errors.push("Zip code phải gồm đúng 5 chữ số.");
+                }
+
+                $("#success").text("");
+                if (errors.length) {
+                    $("#errors").html("<ul><li>" + errors.join("</li><li>") + "</li></ul>");
+                    return;
+                }
+
+                $("#errors").empty();
+                $("#success").text("Đăng ký thành công!");
+            });
+
+            $("#clearButton").on("click", function () {
+                $("#registrationForm")[0].reset();
+                $("#errors").empty();
+                $("#success").empty();
+            });
+        });
+    </script>
+</body>
+</html>
